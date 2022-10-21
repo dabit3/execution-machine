@@ -1,0 +1,1 @@
+export const APIURL = "https://api.exm.dev/"
