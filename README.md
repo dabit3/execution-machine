@@ -69,7 +69,7 @@ For a basic EXM app you need these basic components:
 
 To interact with the platform we'll need some basic configuration that we can set up and reuse.
 
-First, make sure you've created an EXM API key [here](https://exm.dev/).
+First, make sure you've created an EXM API key [here](https://exm.dev/app).
 
 Next, create and set an environment variable either in your local config file, or from your terminal:
 
