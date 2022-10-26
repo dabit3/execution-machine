@@ -249,6 +249,8 @@ node read.js
 
 The return value should now include the new post that was just created.
 
+> Reminder that you can also read the state of any function ID by calling or visiting `https://api.exm.dev/read/<function-id>`
+
 ### Updating and deleting posts
 
 Let's now create the scripts for updating and deleting posts.
