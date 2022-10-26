@@ -1,20 +1,11 @@
 {
   "name": "exm-test",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
   "dependencies": {
-    "next": "12.3.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
-  },
-  "devDependencies": {
-    "eslint": "8.26.0",
-    "eslint-config-next": "12.3.1"
+    "@execution-machine/sdk": "^0.1.42",
+    "chai": "^4.3.6",
+    "uuid": "^9.0.0"
   }
 }
