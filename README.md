@@ -135,8 +135,8 @@ export async function handle(state, action) {
 
 This function will accept three different types of actions:
 
-`createPost` - Creates a new post
-`updatePost` - Updates an existing post with new data
+`createPost` - Creates a new post   
+`updatePost` - Updates an existing post with new data   
 `deletePost` - Deletes a post
 
 If the input `type` does not match any of these, then the state is just returned without any update.
