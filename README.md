@@ -1,6 +1,6 @@
 ## Introduction to Execution Machine (EXM)
 
-[EXM](exm.dev) is a language-agnostic serverless environment powered by [Arweave](https://www.arweave.org/), and enables developers to create permanent, serverless functions on the blockchain. 
+[EXM](https://www.exm.dev) is a language-agnostic serverless environment powered by [Arweave](https://www.arweave.org/), and enables developers to create permanent, serverless functions on the blockchain. 
 
 ![The Execution Machine](header.png)
 
@@ -392,4 +392,4 @@ mocha test.js
 
 To learn more about EXM, check out the [EXM Discord](https://discord.com/invite/7z7PRdXZqm).
 
-To learn more about the Arweave Developer Ecosystem, check out [learn.arweave.dev](learn.arweave.dev).
+To learn more about the Arweave Developer Ecosystem, check out [learn.arweave.dev](https://www.learn.arweave.dev).
