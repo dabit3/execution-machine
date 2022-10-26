@@ -392,4 +392,4 @@ mocha test.js
 
 To learn more about EXM, check out the [EXM Discord](https://discord.com/invite/7z7PRdXZqm).
 
-To learn more about the Arweave Developer Ecosystem, check out [learn.arweave.dev](https://www.learn.arweave.dev).
+To learn more about the Arweave Developer Ecosystem, check out [learn.arweave.dev](https://learn.arweave.dev).
