@@ -20,7 +20,7 @@ In most blockchains, the computation and current state is executed by the blockc
 
 ### CLI vs SDK
 
-You can interact with EXV either via their[CLI](https://docs.exm.dev/cli/introduction) or their [SDK](https://docs.exm.dev/trustless-serverless-functions/introduction/js-sdk). In this tutorial we'll be interacting with the platform using the JavaScript SDK.
+You can interact with EXV either via their [CLI](https://docs.exm.dev/cli/introduction) or their [SDK](https://docs.exm.dev/trustless-serverless-functions/introduction/js-sdk). In this tutorial we'll be interacting with the platform using the [JavaScript SDK](https://docs.exm.dev/trustless-serverless-functions/introduction/js-sdk).
 
 ## Hello World tutorial
 
