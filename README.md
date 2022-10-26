@@ -34,7 +34,7 @@ To be successful with this tutorial you must have:
 
 1. An EXM API key. You can get one [here](https://exm.dev/)
 2. Node.js installed on your machine. I recommend installing Node.js either via [NVM](https://github.com/nvm-sh/nvm) or [FNM](https://github.com/Schniz/fnm)
-3. Mocha installed globally
+3. [Mocha](https://mochajs.org/#installation) installed globally (if you want to run tests)
 
 ### Getting started
 
