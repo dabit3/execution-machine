@@ -26,7 +26,7 @@ You can interact with EXV either via their [CLI](https://docs.exm.dev/cli/introd
 
 Let's explore how to build, deploy, and test an EXM app.
 
-In this example we'll create a basic CMS that will allow a user to create, update, and delete a post. This example will enable us to implement a basic [CRUD app](https://www.google.com/search?q=crud+app&oq=crud+app&aqs=chrome..69i57.1281j0j4&sourceid=chrome&ie=UTF-8) which is the basis for most real-world applications.
+In this example we'll create a basic [CMS](https://kinsta.com/knowledgebase/content-management-system/) that will allow a user to create, update, and delete a post. This example will enable us to implement a basic [CRUD app](https://www.google.com/search?q=crud+app&oq=crud+app&aqs=chrome..69i57.1281j0j4&sourceid=chrome&ie=UTF-8) which is the basis for most real-world applications.
 
 ### Prerequisites
 
