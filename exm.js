@@ -1,5 +1,3 @@
-import { Exm } from '@execution-machine/sdk'
-
-const APIKEY = process.env.EXM_PK
-
-export const exmInstance = new Exm({ token: APIKEY })
+import { Exm } from "npm:@execution-machine/sdk";
+const APIKEY = Deno.env.get("EXM_PK");
+export const exmInstance = new Exm({ token: APIKEY || "" });

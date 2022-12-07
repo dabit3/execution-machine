@@ -1,10 +1,11 @@
 import { exmInstance } from './exm.js'
 import { functionId } from './functionId.js'
 
+//not tested
 const inputs = [{
   type: 'updatePost',
   post: {
-    id: process.argv[2],
+    id: Deno.args[0],
     title: "Hello world V2",
     content: "My updated post!",
     author: "Nader Dabit"

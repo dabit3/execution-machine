@@ -1,4 +1,4 @@
-## Introduction to Execution Machine (EXM)
+## Introduction to Execution Machine (EXM) - Deno version
 
 [EXM](https://www.exm.dev) is a language-agnostic serverless environment powered by [Arweave](https://www.arweave.org/), and enables developers to create permanent, serverless functions on the blockchain. 
 
@@ -33,28 +33,18 @@ In this example we'll create a basic [CMS](https://kinsta.com/knowledgebase/cont
 To be successful with this tutorial you must have:
 
 1. An EXM API key. You can get one [here](https://exm.dev/)
-2. Node.js installed on your machine. I recommend installing Node.js either via [NVM](https://github.com/nvm-sh/nvm) or [FNM](https://github.com/Schniz/fnm)
-3. [Mocha](https://mochajs.org/#installation) installed globally (if you want to run tests)
+2. [Deno](https://deno.land/manual@v1.28.3/getting_started/installation) installed on your machine. 
 
 ### Getting started
 
-To get started, we'll create a new Node.js project in an empty directory:
+To get started, we'll create a new, empty directory:
 
 ```sh
-npm init --y
+mkdir exmstarter
 ```
 
-Next, we'll install the dependencies we'll need for our app:
+Feel free to use any name of the directory, exmstater is just a placeholder. If you are coming from Node.js version, don't be afraid, this is really it, no further steps are necessary.
 
-```sh
-npm install @execution-machine/sdk uuid chai
-```
-
-Finally, update `package.json` to add this configuration to enable ES Modules:
-
-```json
-"type": "module",
-```
 
 ### Basic setup
 
@@ -81,10 +71,9 @@ Now, create a new file named `exm.js` and add the following code:
 
 ```javascript
 /* exm.js */
-import { Exm } from '@execution-machine/sdk'
-
-const APIKEY = process.env.EXM_PK
-export const exmInstance = new Exm({ token: APIKEY })
+import { Exm } from "npm:@execution-machine/sdk";
+const APIKEY = Deno.env.get("EXM_PK");
+export const exmInstance = new Exm({ token: APIKEY || "" });
 ```
 
 Now we'll be able to interact with EXM by importing `exmInstance`.
@@ -151,18 +140,17 @@ Create a new file named `deploy.js` and add the following code:
 
 ```javascript
 /* deploy.js */
-import { ContractType } from '@execution-machine/sdk'
-import fs from 'fs'
-import { exmInstance } from './exm.js'
-import { state } from './state.js'
+import { ContractType } from 'npm:@execution-machine/sdk';
+import { exmInstance } from './exm.js';
+import { state } from './state.js';
 
-const contractSource = fs.readFileSync('handler.js')
-const data = await exmInstance.functions.deploy(contractSource, state, ContractType.JS)
+const contractFile = Deno.readFileSync("handler.js");
+const data = await exmInstance.functions.deploy(contractFile, state, ContractType.JS);
 
-console.log({ data })
+console.log({ data });
 
 /* after the contract is deployed, write the function id to a local file */
-fs.writeFileSync('./functionId.js', `export const functionId = "${data.id}"`)
+await Deno.writeTextFile('./functionId.js', `export const functionId = "${data.id}"`);
 ```
 
 ### Creating a new post
@@ -173,11 +161,11 @@ The first thing we'll want to try to do is to create a new post. Create a new fi
 
 ```javascript
 /* createPost.js */
-import { exmInstance } from './exm.js'
-import { functionId } from './functionId.js'
-import { v4 as uuid } from 'uuid'
+import { exmInstance } from './exm.js';
+import { functionId } from './functionId.js';
 
-const id = uuid()
+
+const id = crypto.randomUUID();
 
 /* the inputs array defines the data that will be available in the handler function as action.input */
 const inputs = [{
@@ -190,7 +178,7 @@ const inputs = [{
   }
 }]
 
-const data = await exmInstance.functions.write(functionId, inputs)
+const data = await exmInstance.functions.write(functionId, inputs);
 console.log({ data })
 ```
 
@@ -222,15 +210,17 @@ Now that everything is set up, let's give it a spin!
 From your terminal, run the deploy script:
 
 ```sh
-node deploy.js
+deno run -A --unstable deploy.js
 ```
+
+Deno does not allow access to your computer by default, therefore `-A` parameter. Unstable allows us to use the npm packages (EXM unfortunately does not have either Deno nor ESM packages)
 
 Once the function has been deployed, you should see a new file written to the project named `functionId.js`.
 
 Next, read the current state of the program:
 
 ```sh
-node read.js
+deno run -A --unstable read.js
 ```
 
 The return value of the state should be an empty `posts` object.
@@ -238,16 +228,16 @@ The return value of the state should be an empty `posts` object.
 Now, create a new post:
 
 ```sh
-node createPost.js
+deno run -A --unstable createPost.js
 ```
 
 Then read the state of the app again:
 
 ```sh
-node read.js
+deno run -A --unstable read.js
 ```
 
-The return value should now include the new post that was just created.
+The return value should now include the new post that was just created. It can take some time to propagate, if you are getting empty record back, just wait a minute.
 
 > Reminder that you can also read the state of any function ID by calling or visiting `https://api.exm.dev/read/<function-id>`
 
@@ -264,7 +254,7 @@ import { functionId } from './functionId.js'
 
 const inputs = [{
   type: 'deletePost',
-  postId: process.argv[2]
+  postId: Deno.args[0]
 }];
 
 await exmInstance.functions.write(functionId, inputs)
@@ -282,7 +272,7 @@ import { functionId } from './functionId.js'
 const inputs = [{
   type: 'updatePost',
   post: {
-    id: process.argv[2],
+    id: postId: Deno.args[0],
     title: "Hello world V2",
     content: "My updated post!",
     author: "Nader Dabit"
@@ -297,96 +287,17 @@ console.log({ data })
 Now, you should be able to update and delete posts by running these two scripts, passing in the post ID:
 
 ```sh
-node deletePost.js <post-id>
+deno run -A --unstable  updatePost.js <post-id>
+```
+and 
+
+```sh
+deno run -A --unstable  deletePost.js <post-id>
 ```
 
 ## Testing
 
-EXM also comes built in with testing functions in their SDK to facilitate testing in a way that can be readable & efficient.
-
-Let's create a test script that will check that all of our action types work as we expect.
-
-Create a new file named `test.js` and add the following code:
-
-```javascript
-import fs from 'fs'
-import { TestFunction, createWrite, FunctionType } from "@execution-machine/sdk"
-import { state } from './state.js'
-import { v4 as uuid } from 'uuid'
-import { expect } from 'chai'
-
-const id = uuid()
-const functionSource = fs.readFileSync('./handler.js')
-
-const createPost = {
-  type: 'createPost',
-  post: {
-    id,
-    title: "Hello world",
-    content: "My first post",
-    author: "Nader Dabit"
-  }
-}
-
-const updatePost = {
-  type: 'updatePost',
-  post: {
-    id,
-    title: "Hello world V2",
-    content: "My updated post!",
-    author: "Nader Dabit"
-  }
-}
-
-const deletePost = {
-  type: 'deletePost',
-  postId: id
-}
-
-describe("Testing EXM", function () {
-  it("Should create a post", async function () {
-    const testAttempt = await TestFunction({
-      functionSource,
-      functionType: FunctionType.JAVASCRIPT,
-      functionInitState: state,
-      writes: [createWrite(createPost)]
-    })
-    const value = testAttempt.state.posts[id]
-
-    expect(value.id).to.equal(id)
-    expect(value.title).to.equal("Hello world")
-  })
-
-  it("Should update a post", async function () {
-    const testAttempt = await TestFunction({
-      functionSource,
-      functionType: FunctionType.JAVASCRIPT,
-      functionInitState: state,
-      writes: [createWrite(createPost), createWrite(updatePost)]
-    })
-    const value = testAttempt.state.posts[id]
-    expect(value.title).to.equal("Hello world V2")
-  })
-
-  it("Should delete a post", async function () {
-    const testAttempt = await TestFunction({
-      functionSource,
-      functionType: FunctionType.JAVASCRIPT,
-      functionInitState: state,
-      writes: [createWrite(createPost), createWrite(deletePost)]
-    })
-    const value = testAttempt.state.posts
-    const length = Object.keys(value).length
-    expect(length).to.equal(0)
-  })
-})
-```
-
-To test, run the following command:
-
-```sh
-mocha test.js
-```
+Testing is little different in Deno. Please refer to the Node branch and compare the syntax with [Deno Testing](https://deno.land/manual@v1.28.3/basics/testing).
 
 ## Next steps
 
